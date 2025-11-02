@@ -1,0 +1,1 @@
+"C language is powerful for system programming." 
