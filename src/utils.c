@@ -76,11 +76,11 @@ char* cleanWord(char *word) {
 
 // --- Placeholder for Member 2's Indexing Function (for compilation/testing) ---
 // In the final project, this should be defined by Member 2 and prototyped in index.h
-void indexWord(const char *word, const char *fileName) {
-    // This is the data passing step.
-    // Replace the printf with the actual function call later.
-    printf("-> INDEXED: [%s] from file: %s\n", word, fileName);
-}
+// void indexWord(const char *word, const char *fileName) {
+//     // This is the data passing step.
+//     // Replace the printf with the actual function call later.
+//     printf("-> INDEXED: [%s] from file: %s\n", word, fileName);
+// }
 
 // Continuation of src/utils.c
 

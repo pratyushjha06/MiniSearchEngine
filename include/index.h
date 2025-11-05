@@ -26,5 +26,8 @@ void indexWord(const char *word, const char *fileName);
 FileNode* addFile(FileNode *head, const char *fileName);
 void displayIndex(TrieNode *root, char *buffer, int depth);
 void freeTrie(TrieNode *root);
+void saveIndexToFile(TrieNode *root, FILE *fp, char *buffer, int depth);
+void exportIndex(const char *filePath);
+void showFullIndex();
 
 #endif

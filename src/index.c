@@ -29,7 +29,6 @@ FileNode* addFile(FileNode *head, const char *fileName) {
 void indexWord(const char *word, const char *fileName) {
     if (!root) root = createNode();
     TrieNode *curr = root;
-
     for (int i = 0; word[i]; i++) {
         char c = word[i];
         if (c < 'a' || c > 'z') continue;
@@ -37,7 +36,6 @@ void indexWord(const char *word, const char *fileName) {
         if (!curr->children[idx]) curr->children[idx] = createNode();
         curr = curr->children[idx];
     }
-
     curr->isEndOfWord = true;
     curr->fileList = addFile(curr->fileList, fileName);
 }
@@ -72,4 +70,46 @@ void freeTrie(TrieNode *node) {
         temp = next;
     }
     free(node);
+}
+
+void saveIndexToFile(TrieNode *node, FILE *fp, char *buffer, int depth) {
+    if (!node) return;
+    if (node->isEndOfWord) {
+        buffer[depth] = '\0';
+        fprintf(fp, "%s -> ", buffer);
+        FileNode *f = node->fileList;
+        while (f) {
+            fprintf(fp, "[%s:%d] ", f->fileName, f->frequency);
+            f = f->next;
+        }
+        fprintf(fp, "\n");
+    }
+    for (int i = 0; i < 26; i++) {
+        if (node->children[i]) {
+            buffer[depth] = 'a' + i;
+            saveIndexToFile(node->children[i], fp, buffer, depth + 1);
+        }
+    }
+}
+
+void exportIndex(const char *filePath) {
+    FILE *fp = fopen(filePath, "w");
+    if (!fp) {
+        fprintf(stderr, "Error: Cannot write index to %s\n", filePath);
+        return;
+    }
+    char buffer[100];
+    saveIndexToFile(root, fp, buffer, 0);
+    fclose(fp);
+    printf("Index successfully exported to %s\n", filePath);
+}
+
+void showFullIndex() {
+    if (!root) {
+        printf("Index is empty.\n");
+        return;
+    }
+    char buffer[100];
+    printf("\n--- Full Index ---\n");
+    displayIndex(root, buffer, 0);
 }
