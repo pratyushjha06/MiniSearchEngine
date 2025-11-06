@@ -3,7 +3,9 @@
 #include <string.h>
 #include "../include/utils.h"
 #include "../include/search_engine.h"
-#include "../include/index.h"
+#include "../include/colors.h"
+
+
 
 extern TrieNode *root;
 
@@ -18,22 +20,38 @@ int main(int argc, char *argv[]) {
     printf("--- File Processing Complete ---\n");
     printf("\n--- Indexing Complete ---\n");
 
+    printHeader(); // Show once at program start
+
     while (1) {
         int choice;
         char word[100];
 
-        printf("\nOptions:\n");
-        printf("1. Search a word\n");
-        printf("2. Show full index\n");
-        printf("3. Export index to file\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+        printf(BLUE "\nOptions:\n" RESET);
+        printf("  1. " GREEN "Search a word\n" RESET);
+        printf("  2. " YELLOW "Show full index\n" RESET);
+        printf("  3. " CYAN "Export index to file\n" RESET);
+        printf("  4. " RED "Exit\n" RESET);
+        printf(MAGENTA "Enter your choice: " RESET);
+
+        if (scanf("%d", &choice) != 1) {
+            printf(RED "Invalid input! Please enter numbers only.\n" RESET);
+            fflush(stdin);
+            continue;
+        }
+
+        // Clear leftover newline from scanf
+        getchar();
 
         switch (choice) {
+
             case 1:
-                printf("Enter a word to search: ");
-                scanf("%s", word);
+                printf(MAGENTA "Enter a word to search: " RESET);
+                if (fgets(word, sizeof(word), stdin) == NULL) break;
+                word[strcspn(word, "\n")] = '\0';
+                if (strlen(word) == 0) {
+                    printf(RED "Please enter a valid word.\n" RESET);
+                    break;
+                }
                 searchWord(word);
                 break;
 
@@ -46,12 +64,14 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 4:
-                printf("Exiting search engine. Goodbye!\n");
+                printf(CYAN "\nThank you for using Mini Search Engine.\n" RESET);
+                printf("Have a great day! 🌿\n\n");
+
                 freeTrie(root);
                 return 0;
 
             default:
-                printf("Invalid choice! Please try again.\n");
+                printf(RED "Invalid choice! Please try again.\n" RESET);
                 break;
         }
     }

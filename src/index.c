@@ -1,4 +1,7 @@
 #include "../include/index.h"
+#include "../include/colors.h"
+
+
 
 TrieNode *root = NULL;
 
@@ -101,15 +104,17 @@ void exportIndex(const char *filePath) {
     char buffer[100];
     saveIndexToFile(root, fp, buffer, 0);
     fclose(fp);
-    printf("Index successfully exported to %s\n", filePath);
+    printf(GREEN "Index successfully exported to %s\n" RESET, filePath);
+
 }
 
 void showFullIndex() {
     if (!root) {
-        printf("Index is empty.\n");
+        printf(RED "Index is empty.\n" RESET);
         return;
     }
     char buffer[100];
-    printf("\n--- Full Index ---\n");
+    printf("\n" CYAN "---------- FULL INDEX ----------\n" RESET);
     displayIndex(root, buffer, 0);
+    printf(CYAN "--------------------------------\n\n" RESET);
 }

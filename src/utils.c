@@ -1,10 +1,14 @@
 #include "../include/utils.h"
 
+
 // Standard C Library Includes
 #include <ctype.h>    // for isalpha, tolower
 #include <string.h>   // for strcmp, strtok
 #include <stdlib.h>   // for exit, NULL
 #include <dirent.h>   // for directory handling (Linux/macOS compatible)
+#define MAX_HISTORY 10
+
+
 
 // --- Stop Word List ---
 const char* stopWords[] = {
@@ -122,6 +126,7 @@ void processFile(const char *fileName, const char *shortName) {
     // Safe File Close
     fclose(fp);
 }
+
 
 
 /**
